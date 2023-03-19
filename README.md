@@ -16,4 +16,4 @@ LAUNCHING:
 > python3 server/app.py
 
 3. launch the client app:
-> python3 client.py
+> python3 client/client.py
