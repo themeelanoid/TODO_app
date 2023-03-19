@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <h1 class="ui left aligned header">themeelanoid's TODO</h1>
+    <form class="ui form" action="" method="post" novalidate>
+        {{ task_form.hidden_tag() }}
+        <p>
+            {{task_form.title.label}}
+            {{task_form.title}}
+        </p>
+        <p>
+            <label for="localdate">start date & time: </label>
+            <input type="datetime-local" id="start" name="start"/>
+        </p>
+        <p>
+            <label for="localdate">end date & time: </label>
+            <input type="datetime-local" id="end" name="end"/>
+        </p>
+        {% if validation_error %}
+            <p style="color:crimson">{{validation_error}}</p>
+            <hr>
+        {% endif %}
+        <button class="ui blue button" id="submit" name="submit">create</button>
+    </form>
+
+    <hr>
+    {% set number = namespace(value=1) %}
+    {% for task in tasks_list %}
+    <div class="ui segment">
+        <p class="ui big header">{{ number.value }}. {{ task.title }}</p>
+
+        {% if task.completed == False %}
+        <span class="ui gray label">not completed</span>
+        {% else %}
+        <span class="ui green label">completed</span>
+        {% endif %}
+
+        <span class="ui gray label">start: {{task.start_date_time}}</span>
+        <span class="ui gray label">end: {{task.end_date_time}}</span>
+        <a class="ui blue button" href="/update/{{ task.id }}">update</a>
+        <a class="ui red button" href="/delete/{{ task.id }}">delete</a>
+        {% set number.value = number.value + 1 %}
+    </div>
+    {% endfor %}
+
+{% endblock content %}
